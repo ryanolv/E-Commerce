@@ -1,9 +1,17 @@
 /* eslint-disable react/react-in-jsx-scope */
 
-import Header from "./components/header/header.component";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import HomePage from "./pages/HomePage";
 
 function App() {
-  return <Header />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
