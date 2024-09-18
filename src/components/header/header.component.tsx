@@ -1,0 +1,25 @@
+/* eslint-disable react/react-in-jsx-scope */
+import { BsCart3 } from "react-icons/bs";
+
+function Header() {
+  return (
+    <div className="m-0 flex w-full justify-between bg-[#212529] p-5 text-white">
+      <h2 className="text-2xl font-bold">CLUB CLOTHING</h2>
+      <div className="flex items-center justify-between space-x-5">
+        <div className="flex items-center text-base font-semibold">
+          Explorar
+        </div>
+        <div className="flex items-center text-base font-semibold">Login</div>
+        <div className="flex items-center text-base font-semibold">
+          Criar Conta
+        </div>
+        <div className="flex items-center text-base font-semibold">
+          <BsCart3 size={25} />
+          <p className="ml-1">5</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Header;
