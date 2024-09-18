@@ -9,7 +9,7 @@ export default [
     files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
     languageOptions: {
       parser: tsParser,
-      globals: { ...globals.browser, ...globals.node },
+      globals: {...globals.browser, ...globals.node},
     },
     plugins: {
       "@typescript-eslint": tseslint,
