@@ -1,7 +1,14 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { BsCart3 } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate("/login");
+  };
+
   return (
     <div className="m-0 flex w-full justify-between bg-[#212529] p-5 text-white">
       <h2 className="text-2xl font-bold">CLUB CLOTHING</h2>
@@ -9,7 +16,12 @@ function Header() {
         <div className="flex items-center text-base font-semibold">
           Explorar
         </div>
-        <div className="flex items-center text-base font-semibold">Login</div>
+        <div
+          className="flex cursor-pointer items-center text-base font-semibold"
+          onClick={handleLoginClick}
+        >
+          Login
+        </div>
         <div className="flex items-center text-base font-semibold">
           Criar Conta
         </div>
