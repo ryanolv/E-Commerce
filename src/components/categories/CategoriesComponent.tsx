@@ -3,7 +3,10 @@ import React, { useEffect, useState } from "react";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../config/firebase.config";
 
+import CategoryItem from "../categoryItem/CategoryItemComponent";
+
 import Category from "../../types/category-types";
+import "./categories-styles.css";
 
 const Categories: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>();
@@ -22,16 +25,17 @@ const Categories: React.FC = () => {
       console.error(error);
     }
   };
-
   useEffect(() => {
     fetchCategories();
   }, []);
 
   return (
-    <div className="flex h-full w-full justify-center">
-      <div className="gri grid h-full w-[1920px] gap-4 p-8">
+    <div className="categories-container">
+      <div className="categories-content">
         {categories?.map((category) => (
-          <p key={category.id}>{category.displayName}</p>
+          <div key={category.id}>
+            <CategoryItem category={category} />
+          </div>
         ))}
       </div>
     </div>
