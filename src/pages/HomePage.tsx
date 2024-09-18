@@ -5,10 +5,10 @@ import Categories from "../components/categories/CategoriesComponent";
 
 const HomePage: React.FC = () => {
   return (
-    <div>
+    <>
       <Header />
       <Categories />
-    </div>
+    </>
   );
 };
 
