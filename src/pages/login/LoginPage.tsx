@@ -2,12 +2,27 @@
 
 import { BsGoogle } from "react-icons/bs";
 import { FiLogIn } from "react-icons/fi";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 import CustomButton from "../../components/custom-button/CustomButtonComponent";
 import Header from "../../components/header/HeaderComponent";
 import CustomInput from "../../components/custom-input/CustomInputComponent";
 
+interface IFormValues extends SubmitHandler<FieldValues> {
+  email: string;
+  password: string;
+}
+
 const LoginPage = () => {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<IFormValues>();
+
+  const onSubmit: SubmitHandler<IFormValues> = (data: IFormValues) =>
+    console.log(data);
+
   return (
     <>
       <Header />
@@ -25,19 +40,28 @@ const LoginPage = () => {
           </p>
           <div className="mb-5 w-full">
             <CustomInput
+              hasError={errors?.email ? true : false}
               label="E-mail"
               type="email"
               placeholder="Digite o seu e-mail"
+              {...register("email", { required: true })}
             />
           </div>
           <div className="mb-5 w-full">
             <CustomInput
+              hasError={errors?.password ? true : false}
               label="Senha"
               type="password"
               placeholder="Digite sua senha"
+              {...register("password", { required: true })}
             />
           </div>
-          <CustomButton startIcon={<FiLogIn size={18} />}>Entrar</CustomButton>
+          <CustomButton
+            startIcon={<FiLogIn size={18} />}
+            onClick={() => handleSubmit(onSubmit)()}
+          >
+            Entrar
+          </CustomButton>
         </div>
       </div>
     </>
