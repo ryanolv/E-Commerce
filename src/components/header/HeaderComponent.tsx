@@ -9,6 +9,10 @@ function Header() {
     navigate("/login");
   };
 
+  const handleSignUpClick = () => {
+    navigate("/sign-up");
+  };
+
   return (
     <div className="m-0 flex w-full justify-between bg-[#212529] p-5 text-white">
       <h2 className="text-2xl font-bold">CLUB CLOTHING</h2>
@@ -22,7 +26,10 @@ function Header() {
         >
           Login
         </div>
-        <div className="flex items-center text-base font-semibold">
+        <div
+          className="flex items-center text-base font-semibold"
+          onClick={handleSignUpClick}
+        >
           Criar Conta
         </div>
         <div className="flex items-center text-base font-semibold">

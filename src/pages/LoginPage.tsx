@@ -5,10 +5,10 @@ import { FiLogIn } from "react-icons/fi";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { isEmail } from "validator";
 
-import CustomButton from "../../components/custom-button/CustomButtonComponent";
-import Header from "../../components/header/HeaderComponent";
-import CustomInput from "../../components/custom-input/CustomInputComponent";
-import InputErrorMessage from "../../components/input-error-message/InputErrorMessage";
+import CustomButton from "../components/custom-button/CustomButtonComponent";
+import Header from "../components/header/HeaderComponent";
+import CustomInput from "../components/custom-input/CustomInputComponent";
+import InputErrorMessage from "../components/input-error-message/InputErrorMessage";
 
 interface IFormValues extends SubmitHandler<FieldValues> {
   email: string;
