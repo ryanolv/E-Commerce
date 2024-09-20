@@ -3,10 +3,12 @@
 import { BsGoogle } from "react-icons/bs";
 import { FiLogIn } from "react-icons/fi";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { isEmail } from "validator";
 
 import CustomButton from "../../components/custom-button/CustomButtonComponent";
 import Header from "../../components/header/HeaderComponent";
 import CustomInput from "../../components/custom-input/CustomInputComponent";
+import InputErrorMessage from "../../components/input-error-message/InputErrorMessage";
 
 interface IFormValues extends SubmitHandler<FieldValues> {
   email: string;
@@ -22,6 +24,8 @@ const LoginPage = () => {
 
   const onSubmit: SubmitHandler<IFormValues> = (data: IFormValues) =>
     console.log(data);
+
+  console.log(errors);
 
   return (
     <>
@@ -42,10 +46,21 @@ const LoginPage = () => {
             <CustomInput
               hasError={errors?.email ? true : false}
               label="E-mail"
-              type="email"
+              type="text"
               placeholder="Digite o seu e-mail"
-              {...register("email", { required: true })}
+              {...register("email", {
+                required: true,
+                validate: (value) => isEmail(value),
+              })}
             />
+            {errors?.email?.type === "required" && (
+              <InputErrorMessage>O e-mail é obrigatório.</InputErrorMessage>
+            )}
+            {errors?.email?.type === "validate" && (
+              <InputErrorMessage>
+                Por favor, insira um endereço de e-mail válido.
+              </InputErrorMessage>
+            )}
           </div>
           <div className="mb-5 w-full">
             <CustomInput
@@ -55,6 +70,9 @@ const LoginPage = () => {
               placeholder="Digite sua senha"
               {...register("password", { required: true })}
             />
+            {errors?.password?.type === "required" && (
+              <InputErrorMessage>A senha obrigatório.</InputErrorMessage>
+            )}
           </div>
           <CustomButton
             startIcon={<FiLogIn size={18} />}
