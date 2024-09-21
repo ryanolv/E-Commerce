@@ -7,6 +7,7 @@ import CategoryItem from "../categoryItem/CategoryItemComponent";
 
 import Category from "../../types/category-types";
 import "./categories-styles.css";
+import { categoryConverter } from "../../converters/firestore-converters";
 
 const Categories: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>();
@@ -15,9 +16,12 @@ const Categories: React.FC = () => {
     try {
       const categoriesFromFirestore: Category[] = [];
 
-      const querySnapshot = await getDocs(collection(db, "categories"));
+      const querySnapshot = await getDocs(
+        collection(db, "categories").withConverter(categoryConverter),
+      );
       querySnapshot.forEach((doc) => {
-        categoriesFromFirestore.push(doc.data() as Category);
+        const result = doc.data();
+        categoriesFromFirestore.push(result);
       });
 
       setCategories(categoriesFromFirestore);
@@ -29,6 +33,7 @@ const Categories: React.FC = () => {
     fetchCategories();
   }, []);
 
+  console.log(categories);
   return (
     <div className="categories-container">
       <div className="categories-content">
