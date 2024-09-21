@@ -1,6 +1,8 @@
 /* eslint-disable react/react-in-jsx-scope */
+import { signOut } from "firebase/auth";
 import { BsCart3 } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { auth } from "../../config/firebase-config";
 
 function Header() {
   const navigate = useNavigate();
@@ -25,6 +27,12 @@ function Header() {
           onClick={handleLoginClick}
         >
           Login
+        </div>
+        <div
+          className="flex cursor-pointer items-center text-base font-semibold"
+          onClick={() => signOut(auth)}
+        >
+          Sair
         </div>
         <div
           className="flex cursor-pointer items-center text-base font-semibold"
