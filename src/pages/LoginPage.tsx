@@ -1,6 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 
 import { BsGoogle } from "react-icons/bs";
+import { FaGithub } from "react-icons/fa";
 import { FiLogIn } from "react-icons/fi";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { isEmail } from "validator";
@@ -12,7 +13,12 @@ import {
 } from "firebase/auth";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 
-import { auth, db, googleProvider } from "../config/firebase-config";
+import {
+  auth,
+  db,
+  githubProvider,
+  googleProvider,
+} from "../config/firebase-config";
 
 import CustomButton from "../components/custom-button/CustomButtonComponent";
 import Header from "../components/header/HeaderComponent";
@@ -56,7 +62,6 @@ const LoginPage = () => {
   const handleSignInWithGoogle = async () => {
     try {
       const userCredential = await signInWithPopup(auth, googleProvider);
-      console.log(userCredential);
       const querySnapshot = await getDocs(
         query(
           collection(db, "users"),
@@ -82,6 +87,35 @@ const LoginPage = () => {
     }
   };
 
+  const handleSignInWithGithub = async () => {
+    try {
+      const userCredential = await signInWithPopup(auth, githubProvider);
+      const querySnapshot = await getDocs(
+        query(
+          collection(db, "users"),
+          where("id", "==", userCredential.user.uid),
+        ),
+      );
+
+      const user = querySnapshot.docs[0]?.data();
+      if (!user) {
+        const displayNameParts = userCredential.user.displayName?.split(" ");
+        const lastName = displayNameParts
+          ? displayNameParts[displayNameParts.length - 1]
+          : "";
+        await addDoc(collection(db, "users"), {
+          id: userCredential.user.uid,
+          email: userCredential.user.email,
+          firstName: displayNameParts ? displayNameParts[0] : "",
+          lastName,
+          provider: "github",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -96,6 +130,12 @@ const LoginPage = () => {
             startIcon={<BsGoogle size={18} />}
           >
             Entrar com o Google
+          </CustomButton>
+          <CustomButton
+            onClick={handleSignInWithGithub}
+            startIcon={<FaGithub size={18} />}
+          >
+            Entrar com o GitHub
           </CustomButton>
           <p className="border-b-color-bgDark text-color-textDark my-5 mt-5 w-full border-b pb-5 text-center font-medium">
             ou entre com o seu e-mail
