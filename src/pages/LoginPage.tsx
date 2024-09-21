@@ -4,6 +4,13 @@ import { BsGoogle } from "react-icons/bs";
 import { FiLogIn } from "react-icons/fi";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { isEmail } from "validator";
+import {
+  AuthError,
+  AuthErrorCodes,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+
+import { auth } from "../config/firebase-config";
 
 import CustomButton from "../components/custom-button/CustomButtonComponent";
 import Header from "../components/header/HeaderComponent";
@@ -18,14 +25,31 @@ interface IFormValues extends SubmitHandler<FieldValues> {
 const LoginPage = () => {
   const {
     register,
+    setError,
     formState: { errors },
     handleSubmit,
   } = useForm<IFormValues>();
 
-  const onSubmit: SubmitHandler<IFormValues> = (data: IFormValues) =>
-    console.log(data);
+  const handleSubmitPress: SubmitHandler<IFormValues> = async (
+    data: IFormValues,
+  ) => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password,
+      );
 
-  console.log(errors);
+      console.log(userCredential);
+    } catch (error) {
+      const _error = error as AuthError;
+      if (_error.code === AuthErrorCodes.INVALID_LOGIN_CREDENTIALS) {
+        setError("password", { type: "mismatch" });
+        setError("email", { type: "mismatch" });
+        return;
+      }
+    }
+  };
 
   return (
     <>
@@ -71,12 +95,17 @@ const LoginPage = () => {
               {...register("password", { required: true })}
             />
             {errors?.password?.type === "required" && (
-              <InputErrorMessage>A senha obrigatório.</InputErrorMessage>
+              <InputErrorMessage>A senha é obrigatória.</InputErrorMessage>
+            )}
+            {errors?.password?.type === "mismatch" && (
+              <InputErrorMessage>
+                As credenciais estão invalidas.
+              </InputErrorMessage>
             )}
           </div>
           <CustomButton
             startIcon={<FiLogIn size={18} />}
-            onClick={() => handleSubmit(onSubmit)()}
+            onClick={() => handleSubmit(handleSubmitPress)()}
           >
             Entrar
           </CustomButton>
