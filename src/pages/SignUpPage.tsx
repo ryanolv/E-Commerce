@@ -3,6 +3,10 @@
 import { FiLogIn } from "react-icons/fi";
 import { useForm } from "react-hook-form";
 import { isEmail } from "validator";
+import { addDoc, collection } from "firebase/firestore";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
+import { auth, db } from "../config/firebase-config";
 
 import Header from "../components/header/HeaderComponent";
 import CustomInput from "../components/custom-input/CustomInputComponent";
@@ -10,7 +14,7 @@ import CustomButton from "../components/custom-button/CustomButtonComponent";
 import InputErrorMessage from "../components/input-error-message/InputErrorMessage";
 
 interface IFormValues {
-  name: string;
+  firstName: string;
   lastName: string;
   email: string;
   password: string;
@@ -27,29 +31,44 @@ const SignUpPage = () => {
 
   const watchPassword = watch("password");
 
-  const onSubmit = (data: IFormValues) => {
-    console.log(data);
-  };
+  const handleSubmitPress = async (data: IFormValues) => {
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password,
+      );
 
-  console.log(errors);
+      console.log(userCredentials);
+
+      await addDoc(collection(db, "users"), {
+        id: userCredentials.user.uid,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: userCredentials.user.email,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
       <Header />
       <div className="flex h-full items-center justify-center">
         <div className="flex w-[450px] flex-col items-center">
-          <p className="text-darkText border-b-solid mb-5 w-full border-b-[#6C757D] pb-5 text-center text-xl font-semibold">
+          <p className="border-b-solid mb-5 w-full border-b-[#6C757D] pb-5 text-center text-xl font-semibold text-darkText">
             Crie sua conta
           </p>
 
           <div className="mb-5 w-full">
             <CustomInput
-              hasError={errors?.name ? true : false}
+              hasError={errors?.firstName ? true : false}
               label="Nome"
               placeholder="digite seu nome"
-              {...register("name", { required: true })}
+              {...register("firstName", { required: true })}
             />
-            {errors?.name?.type === "required" && (
+            {errors?.firstName?.type === "required" && (
               <InputErrorMessage>O nome é obrigatório.</InputErrorMessage>
             )}
           </div>
@@ -121,7 +140,7 @@ const SignUpPage = () => {
           </div>
           <CustomButton
             startIcon={<FiLogIn size={18} />}
-            onClick={() => handleSubmit(onSubmit)()}
+            onClick={() => handleSubmit(handleSubmitPress)()}
           >
             Criar conta
           </CustomButton>
