@@ -13,9 +13,6 @@ export default {
         inputPlaceholder: "#6C757D",
         error: "#FF6A6A",
       },
-      shadow: {
-        "outline-dark": "2px 2px 2px rgba(0, 0, 0, 0.25)",
-      },
     },
   },
 };
