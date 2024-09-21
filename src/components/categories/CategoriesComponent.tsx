@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { getDocs, collection } from "firebase/firestore";
-import { db } from "../../config/firebase.config";
+import { db } from "../../config/firebase-config";
 
 import CategoryItem from "../categoryItem/CategoryItemComponent";
 
