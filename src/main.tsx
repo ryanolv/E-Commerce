@@ -5,11 +5,14 @@ import { UserContextProvider } from "./contexts/UserContext.tsx";
 
 import App from "./App.tsx";
 import "./index.css";
+import CategoryContextProvider from "./contexts/CategoryContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <UserContextProvider>
-      <App />
+      <CategoryContextProvider>
+        <App />
+      </CategoryContextProvider>
     </UserContextProvider>
   </StrictMode>,
 );
