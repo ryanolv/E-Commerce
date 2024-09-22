@@ -12,6 +12,10 @@ function Header() {
 
   const { isAuthenticated } = useContext(UserContext);
 
+  const handleLogoClick = () => {
+    navigate("/");
+  };
+
   const handleLoginClick = () => {
     navigate("/login");
   };
@@ -22,7 +26,12 @@ function Header() {
 
   return (
     <div className="m-0 flex w-full justify-between bg-[#212529] p-5 text-white">
-      <h2 className="text-2xl font-bold">CLUB CLOTHING</h2>
+      <h2
+        className="cursor-pointer text-2xl font-bold"
+        onClick={handleLogoClick}
+      >
+        CLUB CLOTHING
+      </h2>
       <div className="flex items-center justify-between space-x-5">
         <div className="flex cursor-pointer items-center text-base font-semibold">
           Explorar
