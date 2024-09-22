@@ -12,7 +12,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 
 import {
   auth,
@@ -27,6 +27,7 @@ import CustomButton from "../components/custom-button/CustomButtonComponent";
 import Header from "../components/header/HeaderComponent";
 import CustomInput from "../components/custom-input/CustomInputComponent";
 import InputErrorMessage from "../components/input-error-message/InputErrorMessage";
+import Loading from "../components/loading/Loading";
 
 interface IFormValues extends SubmitHandler<FieldValues> {
   email: string;
@@ -41,6 +42,7 @@ const LoginPage = () => {
     handleSubmit,
   } = useForm<IFormValues>();
 
+  const [isLoading, setIsLoading] = useState(false);
   const { isAuthenticated } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -54,6 +56,7 @@ const LoginPage = () => {
     data: IFormValues,
   ) => {
     try {
+      setIsLoading(true);
       const userCredential = await signInWithEmailAndPassword(
         auth,
         data.email,
@@ -68,11 +71,14 @@ const LoginPage = () => {
         setError("email", { type: "mismatch" });
         return;
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleSignInWithGoogle = async () => {
     try {
+      setIsLoading(true);
       const userCredential = await signInWithPopup(auth, googleProvider);
       const querySnapshot = await getDocs(
         query(
@@ -96,11 +102,14 @@ const LoginPage = () => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleSignInWithGithub = async () => {
     try {
+      setIsLoading(true);
       const userCredential = await signInWithPopup(auth, githubProvider);
       const querySnapshot = await getDocs(
         query(
@@ -125,12 +134,15 @@ const LoginPage = () => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <>
       <Header />
+      {isLoading && <Loading />}
       <div className="flex h-full items-center justify-center">
         <div className="flex w-[450px] flex-col items-center">
           <h1 className="text-color-darkText mb-5 text-xl font-semibold">
