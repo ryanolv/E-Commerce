@@ -2,10 +2,15 @@
 import { signOut } from "firebase/auth";
 import { BsCart3 } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+
 import { auth } from "../../config/firebase-config";
+import { UserContext } from "../../contexts/UserContext";
 
 function Header() {
   const navigate = useNavigate();
+
+  const { isAuthenticated } = useContext(UserContext);
 
   const handleLoginClick = () => {
     navigate("/login");
@@ -22,24 +27,31 @@ function Header() {
         <div className="flex cursor-pointer items-center text-base font-semibold">
           Explorar
         </div>
-        <div
-          className="flex cursor-pointer items-center text-base font-semibold"
-          onClick={handleLoginClick}
-        >
-          Login
-        </div>
-        <div
-          className="flex cursor-pointer items-center text-base font-semibold"
-          onClick={() => signOut(auth)}
-        >
-          Sair
-        </div>
-        <div
-          className="flex cursor-pointer items-center text-base font-semibold"
-          onClick={handleSignUpClick}
-        >
-          Criar Conta
-        </div>
+        {!isAuthenticated && (
+          <>
+            <div
+              className="flex cursor-pointer items-center text-base font-semibold"
+              onClick={handleLoginClick}
+            >
+              Login
+            </div>
+            <div
+              className="flex cursor-pointer items-center text-base font-semibold"
+              onClick={handleSignUpClick}
+            >
+              Criar Conta
+            </div>
+          </>
+        )}
+        {isAuthenticated && (
+          <div
+            className="flex cursor-pointer items-center text-base font-semibold"
+            onClick={() => signOut(auth)}
+          >
+            Sair
+          </div>
+        )}
+
         <div className="flex cursor-pointer items-center text-base font-semibold">
           <BsCart3 size={25} />
           <p className="ml-1">5</p>
