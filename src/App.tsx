@@ -12,6 +12,7 @@ import { userConverter } from "./converters/firestore-converters";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
+import Loading from "./components/loading/Loading";
 
 function App() {
   const [isInitializing, setIsInitializing] = useState(true);
@@ -36,9 +37,11 @@ function App() {
       loginUser(userFromFirestore);
       return setIsInitializing(false);
     }
+
+    return setIsInitializing(false);
   });
 
-  if (isInitializing) return;
+  if (isInitializing) return <Loading />;
 
   return (
     <BrowserRouter>

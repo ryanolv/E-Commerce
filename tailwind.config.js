@@ -12,6 +12,7 @@ export default {
         inputBg: "#E9ECEF",
         inputPlaceholder: "#6C757D",
         error: "#FF6A6A",
+        loading: "rgba(0, 0, 0, 0.5)",
       },
     },
   },
