@@ -10,7 +10,7 @@ import {
   AuthErrorCodes,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { auth, db } from "../config/firebase-config";
 import { UserContext } from "../contexts/UserContext";
@@ -19,6 +19,7 @@ import Header from "../components/header/HeaderComponent";
 import CustomInput from "../components/custom-input/CustomInputComponent";
 import CustomButton from "../components/custom-button/CustomButtonComponent";
 import InputErrorMessage from "../components/input-error-message/InputErrorMessage";
+import Loading from "../components/loading/Loading";
 
 interface IFormValues {
   firstName: string;
@@ -38,6 +39,7 @@ const SignUpPage = () => {
   } = useForm<IFormValues>();
 
   const watchPassword = watch("password");
+  const [isLoading, setIsLoading] = useState(false);
   const { isAuthenticated } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -49,6 +51,7 @@ const SignUpPage = () => {
 
   const handleSubmitPress = async (data: IFormValues) => {
     try {
+      setIsLoading(true);
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
         data.email,
@@ -67,12 +70,15 @@ const SignUpPage = () => {
       if (_error.code === AuthErrorCodes.EMAIL_EXISTS) {
         return setError("email", { type: "alreadyInUse" });
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <>
       <Header />
+      {isLoading && <Loading />}
       <div className="flex h-full items-center justify-center">
         <div className="flex w-[450px] flex-col items-center">
           <p className="border-b-solid mb-5 w-full border-b-[#6C757D] pb-5 text-center text-xl font-semibold text-darkText">
