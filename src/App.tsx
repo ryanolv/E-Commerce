@@ -12,6 +12,8 @@ import { userConverter } from "./converters/firestore-converters";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
+import ExplorePage from "./pages/ExplorePage";
+
 import Loading from "./components/loading/Loading";
 
 function App() {
@@ -47,6 +49,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/explore" element={<ExplorePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
       </Routes>

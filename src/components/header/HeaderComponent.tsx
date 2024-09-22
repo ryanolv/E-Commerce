@@ -16,6 +16,10 @@ function Header() {
     navigate("/");
   };
 
+  const handleExploreClick = () => {
+    navigate("/explore");
+  };
+
   const handleLoginClick = () => {
     navigate("/login");
   };
@@ -33,7 +37,10 @@ function Header() {
         CLUB CLOTHING
       </h2>
       <div className="flex items-center justify-between space-x-5">
-        <div className="flex cursor-pointer items-center text-base font-semibold">
+        <div
+          className="flex cursor-pointer items-center text-base font-semibold"
+          onClick={handleExploreClick}
+        >
           Explorar
         </div>
         {!isAuthenticated && (
