@@ -12,6 +12,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { useEffect, useContext } from "react";
 
 import {
   auth,
@@ -19,6 +20,8 @@ import {
   githubProvider,
   googleProvider,
 } from "../config/firebase-config";
+import { UserContext } from "../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
 import CustomButton from "../components/custom-button/CustomButtonComponent";
 import Header from "../components/header/HeaderComponent";
@@ -37,6 +40,15 @@ const LoginPage = () => {
     formState: { errors },
     handleSubmit,
   } = useForm<IFormValues>();
+
+  const { isAuthenticated } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated]);
 
   const handleSubmitPress: SubmitHandler<IFormValues> = async (
     data: IFormValues,
