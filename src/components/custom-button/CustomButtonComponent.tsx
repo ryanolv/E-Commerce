@@ -3,17 +3,19 @@ import React, { ButtonHTMLAttributes } from "react";
 interface CustomButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   startIcon?: React.ReactNode;
+  className?: string;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
   children,
   startIcon,
+  className,
   ...rest
 }) => {
   return (
     <button
       {...rest}
-      className="mb-3 flex w-full items-center justify-center rounded-lg bg-bgWhite px-4 py-2 font-semibold text-darkText transition-all hover:cursor-pointer hover:bg-bgDark hover:text-white"
+      className={`mb-3 flex w-full items-center justify-center rounded-lg bg-bgWhite px-4 py-2 font-semibold text-darkText transition-all hover:cursor-pointer hover:bg-bgDark hover:text-white ${className}`}
     >
       {startIcon && (
         <div className="mr-2 flex h-full items-center">{startIcon}</div>

@@ -4,9 +4,10 @@ import { BsCartCheck } from "react-icons/bs";
 import { CartContext } from "../contexts/CartContext";
 
 import CustomButton from "./custom-button/CustomButtonComponent";
+import CartItem from "./CartItem";
 
 const Cart: FunctionComponent = () => {
-  const { isVisible, toggleCart } = useContext(CartContext);
+  const { isVisible, toggleCart, products } = useContext(CartContext);
   return (
     <div
       className={`fixed bottom-0 left-0 right-0 top-0 flex h-screen w-screen justify-end bg-black bg-opacity-70 transition-all duration-300 ${
@@ -18,6 +19,9 @@ const Cart: FunctionComponent = () => {
         <p className="mb-4 text-2xl font-semibold">Seu Carrinho</p>
 
         {/* produtos */}
+        {products.map((product) => (
+          <CartItem key={product.id} product={product} />
+        ))}
 
         <p className="mb-4 text-xl font-semibold">Total: $999</p>
         <CustomButton startIcon={<BsCartCheck />}>
