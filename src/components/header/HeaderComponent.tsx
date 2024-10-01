@@ -6,11 +6,13 @@ import { useContext } from "react";
 
 import { auth } from "../../config/firebase-config";
 import { UserContext } from "../../contexts/UserContext";
+import { CartContext } from "../../contexts/CartContext";
 
 function Header() {
   const navigate = useNavigate();
 
   const { isAuthenticated } = useContext(UserContext);
+  const { toggleCart } = useContext(CartContext);
 
   const handleLogoClick = () => {
     navigate("/");
@@ -68,7 +70,10 @@ function Header() {
           </div>
         )}
 
-        <div className="flex cursor-pointer items-center text-base font-semibold">
+        <div
+          className="flex cursor-pointer items-center text-base font-semibold"
+          onClick={toggleCart}
+        >
           <BsCart3 size={25} />
           <p className="ml-1">5</p>
         </div>

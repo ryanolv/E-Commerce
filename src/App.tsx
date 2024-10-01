@@ -16,6 +16,7 @@ import ExplorePage from "./pages/ExplorePage";
 
 import Loading from "./components/loading/Loading";
 import CategoryDetailsPage from "./pages/CategoryDetailsPage";
+import Cart from "./components/CartComponent";
 
 function App() {
   const [isInitializing, setIsInitializing] = useState(true);
@@ -55,6 +56,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
       </Routes>
+      <Cart />
     </BrowserRouter>
   );
 }
