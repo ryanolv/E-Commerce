@@ -12,7 +12,7 @@ function Header() {
   const navigate = useNavigate();
 
   const { isAuthenticated } = useContext(UserContext);
-  const { toggleCart } = useContext(CartContext);
+  const { productsCout, toggleCart } = useContext(CartContext);
 
   const handleLogoClick = () => {
     navigate("/");
@@ -75,7 +75,7 @@ function Header() {
           onClick={toggleCart}
         >
           <BsCart3 size={25} />
-          <p className="ml-1">5</p>
+          <p className="ml-1">{productsCout}</p>
         </div>
       </div>
     </div>
