@@ -1,13 +1,19 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useContext } from "react";
 import { AiOutlinePlus, AiOutlineMinus, AiOutlineClose } from "react-icons/ai";
 
 import CartProduct from "../types/cart-types";
+import { CartContext } from "../contexts/CartContext";
 
 interface CartItemProps {
   product: CartProduct;
 }
 
 const CartItem: FunctionComponent<CartItemProps> = ({ product }) => {
+  const { removeProductFromCart } = useContext(CartContext);
+  const handleRemoveCLick = () => {
+    removeProductFromCart(product.id);
+  };
+
   return (
     <div className="mb-4 flex items-center text-darkText">
       <div
@@ -23,7 +29,7 @@ const CartItem: FunctionComponent<CartItemProps> = ({ product }) => {
           <AiOutlinePlus size={20} className="hover:cursor-pointer" />
         </div>
       </div>
-      <div className="mr-5 hover:cursor-pointer">
+      <div className="mr-5 hover:cursor-pointer" onClick={handleRemoveCLick}>
         <AiOutlineClose size={25} />
       </div>
     </div>
