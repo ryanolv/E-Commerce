@@ -9,10 +9,14 @@ interface CartItemProps {
 }
 
 const CartItem: FunctionComponent<CartItemProps> = ({ product }) => {
-  const { removeProductFromCart } = useContext(CartContext);
-  const handleRemoveCLick = () => {
-    removeProductFromCart(product.id);
-  };
+  const {
+    removeProductFromCart,
+    increaseProductQuantity,
+    decreaseProductQuantity,
+  } = useContext(CartContext);
+  const handleRemoveCLick = () => removeProductFromCart(product.id);
+  const handleIncreaseClick = () => increaseProductQuantity(product.id);
+  const handleDecreaseClick = () => decreaseProductQuantity(product.id);
 
   return (
     <div className="mb-4 flex items-center text-darkText">
@@ -24,9 +28,17 @@ const CartItem: FunctionComponent<CartItemProps> = ({ product }) => {
         <p className="mb-1 font-semibold">{product.name}</p>
         <p className="font-medium">R${product.price}</p>
         <div className="mt-3 flex items-center">
-          <AiOutlineMinus size={20} className="hover:cursor-pointer" />
+          <AiOutlineMinus
+            size={20}
+            className="hover:cursor-pointer"
+            onClick={handleDecreaseClick}
+          />
           <p className="mx-3">{product.quantity}</p>
-          <AiOutlinePlus size={20} className="hover:cursor-pointer" />
+          <AiOutlinePlus
+            size={20}
+            className="hover:cursor-pointer"
+            onClick={handleIncreaseClick}
+          />
         </div>
       </div>
       <div className="mr-5 hover:cursor-pointer" onClick={handleRemoveCLick}>
