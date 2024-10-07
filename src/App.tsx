@@ -18,6 +18,7 @@ import CategoryDetailsPage from "./pages/CategoryDetailsPage";
 
 import Loading from "./components/loading/Loading";
 import Cart from "./components/CartComponent";
+import AuthenticationGuard from "./guards/AuthenticationGuard";
 
 function App() {
   const [isInitializing, setIsInitializing] = useState(true);
@@ -54,7 +55,14 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/category/:id" element={<CategoryDetailsPage />} />
-        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route
+          path="/checkout"
+          element={
+            <AuthenticationGuard>
+              <CheckoutPage />
+            </AuthenticationGuard>
+          }
+        />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
       </Routes>
