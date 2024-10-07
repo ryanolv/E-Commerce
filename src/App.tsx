@@ -13,9 +13,10 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import ExplorePage from "./pages/ExplorePage";
+import CheckoutPage from "./pages/CheckoutPage";
+import CategoryDetailsPage from "./pages/CategoryDetailsPage";
 
 import Loading from "./components/loading/Loading";
-import CategoryDetailsPage from "./pages/CategoryDetailsPage";
 import Cart from "./components/CartComponent";
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/category/:id" element={<CategoryDetailsPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
       </Routes>
