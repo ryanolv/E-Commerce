@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
@@ -13,6 +14,7 @@ export default {
         inputPlaceholder: "#6C757D",
         error: "#FF6A6A",
         loading: "rgba(0, 0, 0, 0.5)",
+        success: "#198754",
       },
     },
   },
